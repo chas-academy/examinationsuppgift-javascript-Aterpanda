@@ -20,10 +20,20 @@ function addTransaction(type) {
     //Här skapar jag ett "li" element som används för att göra så nya rader skapas i listorna när jag lägger till saker i dessa listor.
     const list = document.createElement("li");
 
+    //Missade detta i första versionen
+    //Den kollar bara om det är tomt i beskrivning eller belopp och i så fall så gör den inget och bara returnerar ut ur funktionen.
+    if (desc === "" || amount === "") {
+        return;
+    }
+    //Här kollar jag om det som skrivs in i amount är ett nummer eller inte.
+    if (isNaN(amountnumber)) {
+        return;
+    }
+
     //Här kollar jag vilken transaktion det är och om det är en inkomst så lägger till det i rätt lista och uppdaterar saldot. 
     //Om det inte är en inkomst så hoppar den vidare till "Else if" och kollar om det är en utgift och gör samma sak fast - iställeSt för +.
     if (type === "income") {
-        list.textContent = `${desc} - ${amountnumber} kr`;
+        list.textContent = `${desc} - ${amountnumber} kr (Inkomst)`;
         incomeList.appendChild(list);
 
         //Ökar saldot vilket går att göra så enkelt som + eftersom jag "frigjordde" amount till en siffervariabel.
@@ -31,7 +41,7 @@ function addTransaction(type) {
 
         //Typ samma som ovan men istället om det är en utgift så fortsätter neden och startar nedan kod som lägger det på rätt lista och uppdaterar saldot.
     } else if (type === "expense") {
-        list.textContent = `${desc} - ${amountnumber} kr`;
+        list.textContent = `${desc} - ${amountnumber} kr (Utgift)`;
         expenseList.appendChild(list);
 
         //Minskar saldot med samma logik som ovan fast istället för + så är det -.
